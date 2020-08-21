@@ -1,0 +1,40 @@
+{
+    "name": "restapi-template",
+    "version": "0.8.0",
+    "private": false,
+    "bin": {
+        "app": "./dist/bin/www"
+    },
+    "description": "rest api template with express generator, tar -xvf restapi-template.tar -C /target/directory",
+    "author": {
+        "name": "woongc",
+        "email": "pustinia@gmail.com",
+        "url": "https://github.com/pustinia"
+    },
+    "scripts": {
+        "bundle": "rimraf dist/ && babel src --out-dir dist/ --ignore deploy.sh,logs,test --copy-files",
+        "copy": "cp package.json dist/ && cp README.md dist/",
+        "build": "npm run bundle && npm run copy",
+        "devstart": "npm run build && pm2 start ./src/config/ecosystem.config.js --only restapi-template-dev --env development",
+        "prodstart": "npm run build && pm2 start ./dist/config/ecosystem.config.js --only restapi-template --env production",
+        "maketgz": "cd dist && npm pack && mv *.tgz ../deploy/"
+    },
+    "dependencies": {
+        "cookie-parser": "~1.4.4",
+        "date-utils": "^1.2.21",
+        "debug": "~2.6.9",
+        "express": "~4.16.1",
+        "http-errors": "^1.8.0",
+        "moment-timezone": "^0.5.31",
+        "morgan": "~1.9.1",
+        "rotating-file-stream": "^2.1.3",
+        "winston": "^3.3.3",
+        "winston-daily-rotate-file": "^4.5.0",
+        "ws": "^7.3.1"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "rimraf": "^3.0.2"
+    }
+}

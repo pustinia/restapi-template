@@ -1,0 +1,149 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+const app = require('../app');
+const debug = require('debug')('restapi-template:server');
+const http = require('http');
+const wsSocket = require('../system/websocket');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+const port = normalizePort(process.env.PORT || '3001');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+const server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+server.on('upgrade', wsSocket.wsUpgrade); // websocket upgrade 설정 추가.
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+    const port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
+
+    if (port >= 0) {
+        // port number
+        return port;
+    }
+
+    return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+
+    const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+// woongc 추가
+function onListening() {
+    const addr = server.address();
+    const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+
+    // PM2가 스크립트를 실행하지 않았다면 process.send 메소드가 undefined일 수 있다.
+    if (process.send) {
+        process.send('ready'); // PM2에게 앱 구동이 완료되었음을 전달한다
+        console.log('sent ready signal to PM2 at', new Date());
+    }
+}
+// woongc 추가
+process.on('SIGINT', function () {
+    console.log('> received SIGNIT signal');
+    // pm2 재시작 신호가 들어오면 서버를 종료시킨다.
+    server.close(function (err) {
+        console.log('server closed');
+        process.exit(err ? 1 : 0);
+    });
+});
+
+// websocket upgrade 설정
+// server.on('upgrade', websocketUpgrade)
+/*
+const wsServer = new ws.Server({ noServer: true });
+wsServer.on('connection', (socket, request) => {
+    socket.on('message', (message) => console.log(message));
+    socket.on('close', () => {
+        console.log('websocket close');
+    });
+    socket.on('error', (err) => {
+        console.log('websocket error ', err);
+    });
+});
+
+server.on('upgrade', (request, socket, head) => {
+    const pathname = url.parse(request.url).pathname;
+    console.log(pathname);
+    if (pathname === '/websocket') {
+        wsServer.handleUpgrade(request, socket, head, (ws) => {
+            wsServer.emit('connection', ws, request);
+        });
+    } else {
+        socket.destroy();
+    }
+});
+*/
+
+/*
+server.on('upgrade', function upgrade(request, socket, head) {
+    const pathname = url.parse(request.url).pathname;
+    if (pathname === URL_OUT) {
+        wss1.handleUpgrade(request, socket, head, function done(ws) {
+            wss1.emit('connection', ws, request);
+        });
+    } else if (pathname === URL_IN) {
+        wss2.handleUpgrade(request, socket, head, function done(ws) {
+            wss2.emit('connection', ws, request);
+        });
+    } else {
+        socket.destroy();
+    }
+});
+const serverPort = process.argv[2] ? process.argv[2] : 9000;
+server.listen(serverPort);
+*/
