@@ -1,11 +1,11 @@
 {
     "name": "restapi-template",
-    "version": "0.8.0",
+    "version": "0.1.0",
     "private": false,
     "bin": {
         "app": "./dist/bin/www"
     },
-    "description": "rest api template with express generator, tar -xvf restapi-template.tar -C /target/directory",
+    "description": "rest api template with express generator. to make restapi in production. more easily and fast !!",
     "author": {
         "name": "woongc",
         "email": "pustinia@gmail.com",
