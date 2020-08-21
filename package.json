@@ -5,7 +5,7 @@
     "bin": {
         "app": "./dist/bin/www"
     },
-    "description": "rest api template with express generator. to make restapi in production. more easily and fast !!",
+    "description": "rest api template with express generator. to make restapi in production. more easily and fast !!!",
     "author": {
         "name": "woongc",
         "email": "pustinia@gmail.com",
