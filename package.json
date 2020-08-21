@@ -1,6 +1,6 @@
 {
     "name": "restapi-template",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "private": false,
     "bin": {
         "app": "./dist/bin/www"
