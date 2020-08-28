@@ -30,7 +30,7 @@ const defaultPm2Config = {
 // 개발로 설정 변경시 추가.
 const developmentConfig = {
     name: 'restapi-template-dev',
-    script: './src/bin/www',
+    //script: './src/bin/www',
     instances: 1,
 };
 

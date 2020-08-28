@@ -1,6 +1,6 @@
 {
     "name": "restapi-template",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "private": false,
     "bin": {
         "app": "./dist/bin/www"
@@ -15,9 +15,13 @@
         "bundle": "rimraf dist/ && babel src --out-dir dist/ --ignore deploy.sh,logs,test --copy-files",
         "copy": "cp package.json dist/ && cp README.md dist/",
         "build": "npm run bundle && npm run copy",
-        "devstart": "npm run build && pm2 start ./src/config/ecosystem.config.js --only restapi-template-dev --env development",
-        "prodstart": "npm run build && pm2 start ./dist/config/ecosystem.config.js --only restapi-template --env production",
-        "maketgz": "cd dist && npm pack && mv *.tgz ../deploy/"
+        "devstart": "npm run build && cd dist && pm2 start ./config/ecosystem.config.js --only restapi-template-dev --env development",
+        "prodstart": "npm run build && cd dist && pm2 start ./config/ecosystem.config.js --only restapi-template --env production",
+        "clean": "rimraf deploy && mkdir deploy",
+        "pack": "cd dist && npm pack",
+        "deploy": "npm run clean && npm run pack && mv ./dist/*.tgz ./deploy/",
+        "watch:devstart": "watch 'npm run devstart' src --wait=10",
+        "watch:prodstart": "watch 'npm run prodstart' src --wait=10"
     },
     "dependencies": {
         "cookie-parser": "~1.4.4",
@@ -35,6 +39,7 @@
     "devDependencies": {
         "babel-cli": "^6.26.0",
         "babel-preset-env": "^1.7.0",
-        "rimraf": "^3.0.2"
+        "rimraf": "^3.0.2",
+        "watch": "^1.0.2"
     }
 }

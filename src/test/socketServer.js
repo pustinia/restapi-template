@@ -47,4 +47,6 @@ const sendMsg = async (clientName, message) => {
         return `999`;
     }
 };
+
+// restapi가 서버가 socket server
 module.exports.sendMsg = sendMsg;

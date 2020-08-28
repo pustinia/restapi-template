@@ -26,7 +26,9 @@ npm run prodstart -- starting pm2, with production mode and config
 npm run maketgz  -- make tar file to deploy folder for deploy
 ```
 
-git flow 전략
+
+
+### git flow 전략
 
 https://gmlwjd9405.github.io/2018/05/11/types-of-git-branch.html // 여기 설명이 잘되어 있네
 
