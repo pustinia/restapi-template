@@ -19,6 +19,10 @@ const connectHandler = () => {
     process.stdin.resume();
     process.stdin.on('data', (data) => {
         client.write(data);
+        if (data.toString() === 'close') {
+            console.log('sss');
+            client.destroy();
+        }
     });
 
     // data from server.
@@ -31,11 +35,11 @@ const connectHandler = () => {
         console.log('client-> connection is closed');
     });
 
-    client.on('end', function () {
+    client.on('end', () => {
         console.log('client-> connection is end');
     });
 
-    client.on('timeout', function () {
+    client.on('timeout', () => {
         console.log('client-> connection is timeout');
     });
 };

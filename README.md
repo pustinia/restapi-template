@@ -14,19 +14,45 @@ src - javascript source for developing
 	system - setting log, accesslog, config, websocket
 	database - logic of database
 dist - babel changing node.js source for deployment(ES6)
-deploy - tar file for deploy any server
+deploy - .tgz file for deploy to server.
 ```
 
 About npm scripts
 
 ```
-npm run build -- make dist foler and files with babel
-npm run devstart -- starting pm2, with development mode and config
-npm run prodstart -- starting pm2, with production mode and config
-npm run maketgz  -- make tar file to deploy folder for deploy
+"bundle": "rimraf dist/ && babel src --out-dir dist/ --ignore deploy.sh,logs,test --copy-files",
+"copy": "cp package.json dist/ && cp README.md dist/",
+"build": "npm run bundle && npm run copy",
+"devstart": "npm run build && cd dist && pm2 start ./config/ecosystem.config.js --only restapi-template-dev --env development",
+"prodstart": "npm run build && cd dist && pm2 start ./config/ecosystem.config.js --only restapi-template --env production",
+"clean": "rimraf deploy && mkdir deploy",
+"pack": "cd dist && npm pack",
+"deploy": "npm run clean && npm run pack && mv ./dist/*.tgz ./deploy/",
+"watch:devstart": "watch 'npm run devstart' src --wait=10",
+"watch:prodstart": "watch 'npm run prodstart' src --wait=10"
 ```
 
-git flow 전략
+About configurations
+
+```
+./config/config.json
+	-> about log, database and any custom settings
+./config/ecosystem.config.js
+	-> about pm2 config, development or production mode settings.
+```
+
+About shell scripts
+
+```
+start.sh         // when staring in production mode
+stop.sh          // when stopping in production mode
+scaleup.sh       // when sacle up in production mode
+install.sh       // installing npm packages
+```
+
+
+
+### git flow 전략
 
 https://gmlwjd9405.github.io/2018/05/11/types-of-git-branch.html // 여기 설명이 잘되어 있네
 
