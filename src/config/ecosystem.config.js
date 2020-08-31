@@ -6,11 +6,12 @@ const defaultPm2Config = {
     script: './bin/www',
     // pm2 instance
     instances: 3,
-    watch: false,
+    // watch 할 파일, 폴더를 설정해 준다.
+    watch: ['app.js', 'bin', 'config', 'public', 'routes', 'system'],
     // pm2 mode cluster or fork
     exec_mode: 'cluster',
     // pm2 memory settings
-    max_memory_restart: '150M',
+    max_memory_restart: '100M',
     // 앱 실행 신호까지 기다릴 최대 시간. ms 단위.
     listen_timeout: 50000,
     // 새로운 프로세스 실행이 완료된 후 예전 프로세스를 교체하기까지 기다릴 시간
@@ -27,16 +28,17 @@ const defaultPm2Config = {
     },
 };
 
-// 개발로 설정 변경시 추가.
+// development configs
 const developmentConfig = {
     name: 'restapi-template-dev',
-    //script: './src/bin/www',
     instances: 1,
 };
 
 module.exports = {
     apps: [
-        Object.assign({}, defaultPm2Config, developmentConfig), // development 환경
-        Object.assign({}, defaultPm2Config), // production 환경
+        // development 환경
+        Object.assign({}, defaultPm2Config, developmentConfig),
+        // production 환경
+        Object.assign({}, defaultPm2Config),
     ],
 };
