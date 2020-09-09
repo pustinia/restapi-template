@@ -7,12 +7,10 @@ const configJson = require('../config/config.json')[process.env.NODE_ENV || 'dev
 // set sub configs
 
 // database config
-const dbConfig = configJson.db;
+const dbConfig = configJson.databases;
 
 // log config
 const logConfig = configJson.log;
 
 module.exports.dbConfig = dbConfig;
 module.exports.logConfig = logConfig;
-// export const dbConfig = configJson.db;
-// export const logConfig = configJson.log;

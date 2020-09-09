@@ -50,7 +50,15 @@ scaleup.sh       // when sacle up in production mode
 install.sh       // installing npm packages
 ```
 
+About database
 
+```
+
+
+    
+[mysql]
+
+```
 
 ### git flow 전략
 
@@ -109,9 +117,10 @@ git 에 tag 를 추가하는 방법 ?
 	$git push origin --tags
 > tag 삭제하려면 ?
  	$git tag -d v1.0.0
-
 > 이미 커밋된 소스에 tag를 추가 하려면 ?
-$ git tag {tag-name} {commit-id}
+  $ git tag {tag-name} {commit-id}
+> commit 을 취소하는 경우 ?
+  $ git reset HEAD^
 ```
 
 신규 feature 생성

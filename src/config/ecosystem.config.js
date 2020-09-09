@@ -6,8 +6,8 @@ const defaultPm2Config = {
     script: './bin/www',
     // pm2 instance
     instances: 3,
-    // watch 할 파일, 폴더를 설정해 준다.
-    watch: ['app.js', 'bin', 'config', 'public', 'routes', 'system'],
+    // watch 할 파일, 폴더를 설정해 준다. watch:devstart 명령어 활용
+    watch: ['app.js', 'bin', 'config', 'public', 'routes', 'system', 'databases'],
     // pm2 mode cluster or fork
     exec_mode: 'cluster',
     // pm2 memory settings
