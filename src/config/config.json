@@ -7,9 +7,30 @@
             "winston_log_path": "./logs",
             "winston_log_file": "restapi.log"
         },
-        "db": {
-            "hosts": ["localhost"],
-            "database": "api"
+        "databases": {
+            "oracle": [
+                {
+                    "user": "woongc",
+                    "password": "datafirst2!!",
+                    "connectString": "127.0.0.1/XE",
+                    "port": 1512,
+                    "poolAlias": "1",
+                    "poolIncrement": 0,
+                    "poolMax": 4,
+                    "poolMin": 4,
+                    "poolPingInterval": 30
+                }
+            ],
+            "mysql": [
+                {
+                    "host": "202.30.249.20",
+                    "user": "asterisk",
+                    "password": "vkvkdltm",
+                    "port": 3306,
+                    "database": "asterisk",
+                    "connectionLimit": 4
+                }
+            ]
         }
     },
     "production": {

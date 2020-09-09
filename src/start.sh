@@ -11,5 +11,10 @@
 
 ECO_CONFIG=./config/ecosystem.config.js
 APP_NAME=restapi-template
+
+# delete all pm2 process
+pm2 delete ${APP_NAME}
+# start again.
 pm2 start ${ECO_CONFIG} --only ${APP_NAME} --env production
+
 
